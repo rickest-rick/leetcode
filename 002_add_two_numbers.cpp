@@ -20,15 +20,13 @@ public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         ListNode head(0);
         ListNode* current = &head;
-        ListNode* nodeL1 = l1;
-        ListNode* nodeL2 = l2;
         
         int digit = 0, carryover = 0;
         int x = 0, y = 0;
         // iterate over the two lists until you reach the end of the longest
-        while (nodeL1 != NULL || nodeL2 != NULL ){
-            x = (nodeL1 != NULL) ? nodeL1->val : 0;
-            y = (nodeL2 != NULL) ? nodeL2->val : 0;
+        while (l1 != NULL || l2 != NULL ){
+            x = (l1 != NULL) ? l1->val : 0;
+            y = (l2 != NULL) ? l2->val : 0;
         
             digit = x + y + carryover;
             // sum might result in carryover
@@ -40,13 +38,12 @@ public:
             current = current->next;
             
             // go to the next node if there is one
-            if (nodeL1 != NULL) nodeL1 = nodeL1->next;
-            if (nodeL2 != NULL) nodeL2 = nodeL2->next;
+            if (l1 != NULL) l1 = l1->next;
+            if (l2 != NULL) l2 = l2->next;
         }
         // append new node if carryover results in number with more digits
         if (carryover > 0){
-            ListNode* tail = new ListNode(carryover);
-            current->next = tail;
+            current->next = new ListNode(carryover);
         }
         return head.next;
     }
