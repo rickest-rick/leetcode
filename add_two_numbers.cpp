@@ -36,18 +36,17 @@ public:
     * except the number 0 itself.
     */
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        // use the longer list for the result
+        // use the nodes of the longer list for the result
         ListNode* head = longestList(l1, l2);
         ListNode* currentResultNode = head;
-        ListNode* currentL1 = l1;
-        ListNode* currentL2 = l2;
+        ListNode* currentInputNode = (head == l1) ? l2 : l1;
         
         int digit = 0, carryover = 0;
         bool firstEndReached = false, secondEndReached = false;
         // iterate over the two lists until you reach the end of one of them
         while (!(firstEndReached || secondEndReached)) {
             // add the current elements and possible carryover
-            digit = currentL1->val + currentL2->val + carryover;
+            digit = currentResultNode->val + currentInputNode->val + carryover;
             
             // check if sum > 9 for next carryover
             if (digit > 9){
@@ -59,12 +58,10 @@ public:
             currentResultNode->val = digit;
             
             // go to the next digit
-            if (currentL1->next) { currentL1 = currentL1->next; }
-            else {firstEndReached = true; }
-            if (currentL2->next) { currentL2 = currentL2->next; }
-            else {secondEndReached = true; }
-            // if end of longest number is not reached, go to next node
             if (currentResultNode->next) { currentResultNode = currentResultNode->next; }
+            else {firstEndReached = true; }
+            if (currentInputNode->next) { currentInputNode = currentInputNode->next; }
+            else {secondEndReached = true; }
         }
         // if the end of the smaller number is reached, append the digits of the 
         // longer one and the carryover
