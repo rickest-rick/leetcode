@@ -12,7 +12,7 @@ public:
         
         list<char> currentSubstring;
         unordered_set<char> charCache;
-        int maxLength = 0, length = 0;
+        int maxLength = 0;
 
         for(int i = 0; i < s.length(); i++) {
             // check if the current character is already hashed
@@ -23,19 +23,16 @@ public:
                 while (currentSubstring.front() != duplicate) {
                     charCache.erase(currentSubstring.front());
                     currentSubstring.pop_front();
-                    length--;
                 }
                 // @TODO: this duplicate code is ugly, but a do-while-loop
                 // wouldn't work, because we would skip the last duplicate 
                 // element to delete
                 charCache.erase(currentSubstring.front());
                 currentSubstring.pop_front();
-                length--;
             }
             currentSubstring.emplace_back(s[i]);
-            length++;
-            if (length > maxLength) maxLength = length;
             charCache.emplace(s[i]);
+            if (charCache.size() > maxLength) maxLength = charCache.size();
         }
         return maxLength;
     }
