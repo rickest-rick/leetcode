@@ -10,20 +10,15 @@ public:
     int maxArea(vector<int>& height) {
         // starting from the outer borders of the array
         int left = 0, right = height.size() - 1;
-        int maxVolume = area(height, left, right);
+        int maxVolume = 0;
         // iterate towards the middle, stopping at higher left and right borders
         // that might result in a higher maxVolume
-        while (right > left) {
+        while (left != right) {
+            maxVolume = max(maxVolume, area(height, left, right));
             if (height[right] > height[left]) {
                 left++;
-                if (height[left] > height[left - 1]) {
-                    maxVolume = max(maxVolume, area(height, left, right));
-                }
             } else {
                 right--;
-                if (height[right] > height[right + 1]) {
-                    maxVolume = max(maxVolume, area(height, left, right));
-                }
             }
         }        
         return maxVolume;
@@ -38,4 +33,4 @@ private:
      int area(const vector<int>& height, int left, int right) {
          return min(height[left], height[right]) * (right - left);
      }
-};
+}; 
