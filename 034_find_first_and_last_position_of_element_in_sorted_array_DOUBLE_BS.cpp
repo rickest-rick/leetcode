@@ -15,17 +15,18 @@ public:
             if (nums[m] == target) first = m;
             if (nums[m] >= target) right = m;
             else left = m + 1;
+        } 
+        if (first != -1) { // target is present in nums
+            left = 0;
+            right = nums.size();
+            // binary search for last
+            while (left < right) {
+                int m = left + (right - left) / 2;
+                if (nums[m] == target) last = m;
+                if (nums[m] <= target) left = m + 1;
+                else right = m;
+            }
         }
-        left = 0;
-        right = nums.size();
-        // binary search for last
-        while (left < right) {
-            int m = left + (right - left) / 2;
-            if (nums[m] == target) last = m;
-            if (nums[m] <= target) left = m + 1;
-            else right = m;
-        }
-        if (first != -1) return vector<int>{first, last}; 
-        else return vector<int>{-1,-1};
+        return vector<int>{first, last};
     }
 }; 
